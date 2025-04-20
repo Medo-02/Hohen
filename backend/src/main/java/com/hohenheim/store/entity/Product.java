@@ -18,6 +18,10 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
+    // Join on the category_id of the category table
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+
     @Column(name = "name")
     private String name;
 
@@ -43,4 +47,6 @@ public class Product {
     @Column(name = "lastUpdated")
     @UpdateTimestamp
     private Date lastUpdated;
+
+
 }
