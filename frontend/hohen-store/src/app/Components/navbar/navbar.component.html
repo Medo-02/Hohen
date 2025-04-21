@@ -1,11 +1,14 @@
-<nav class="bg-[var(--color-primary)] text-[var(--color-text-primary)] py-3 px-6 shadow-2 flex align-items-center justify-content-between relative lg:static border-bottom-1 border-gray-800" dir="rtl">
-    <div class="flex align-items-center gap-4">
-        <a><img src="assets/icons/Logo.png" alt="Logo" style="height: 64px; width: auto;"></a>
-        <a class="cursor-pointer hover:text-[var(--color-text-secondary)]">الرئيسية</a>
-        <a class="cursor-pointer hover:text-[var(--color-text-secondary)]">المنتجات</a>
-        <a class="cursor-pointer hover:text-[var(--color-text-secondary)]">من نحن</a>
+<nav class="bg-primary-900 py-3 px-6 shadow-2 flex align-items-center justify-content-between relative lg:static border-bottom-1 border-gray-800" dir="rtl">
+    <div class="flex align-items-center gap-8">
+        <a class="cursor-pointer"><img src="assets/icons/Logo.png" alt="Logo" style="height: 64px; width: auto;"></a>
+        <a class="cursor-pointer hover:text-primary-500 text-xl">الرئيسية</a>
+        <a class="cursor-pointer hover:text-primary-500 text-xl">المنتجات</a>
+        <a class="cursor-pointer hover:text-primary-500 text-xl">من نحن</a>
     </div>
     <div class="flex align-items-center gap-4">
-        <input pInputText type="text" [(ngModel)]="value" placeholder="بحث..." class="w-15rem" />
+        <p-inputgroup>
+            <input pInputText placeholder="Keyword" />
+            <p-button label="ابحث" severity="primary" />
+        </p-inputgroup>
     </div>
 </nav>

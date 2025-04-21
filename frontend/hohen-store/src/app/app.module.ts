@@ -10,6 +10,7 @@ import { providePrimeNG } from 'primeng/config';
 import { ProductListComponent } from "./Components/product-list/product-list.component";
 import { ProductService } from './Services/product.service';
 import { NavbarComponent } from "./Components/navbar/navbar.component";
+import MyPreset from '../custom-preset';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { NavbarComponent } from "./Components/navbar/navbar.component";
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: MyPreset
       },
       ripple: true,
     }),
