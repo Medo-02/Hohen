@@ -6,17 +6,20 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { DrawerModule } from 'primeng/drawer';
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [InputTextModule, FormsModule, MenubarModule,
     InputGroupModule, InputGroupAddonModule, ButtonModule,
+    DrawerModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
   value: any;
+  showSideBar = false;
   
   constructor(private router: Router) { }
   
