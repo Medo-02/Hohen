@@ -12,12 +12,11 @@ import { map } from 'rxjs/operators';
 })
 export class ProductService {
 
-  private baseUrl = environment.BASE_URL + "product";
+  private baseUrl = environment.BASE_URL + "products";
 
   constructor(private httpClient: HttpClient) { }
 
   getProductList(): Observable<Product[]> {
-    console.log(this.baseUrl);
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
       map(response => response._embedded.products)
     );

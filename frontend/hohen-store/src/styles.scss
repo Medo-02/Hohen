@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+    /* Primary and Secondary Colors */
+    --color-primary: #000;
+    /* Dark Black */
+    --color-secondary: #333333;
+    /* Dark Gray */
+
+    /* Surface and Background */
+    --color-background: #121212;
+    /* Very Dark Background */
+    --color-surface: #1f1f1f;
+    /* Slightly Lighter Dark Surface */
+
+    /* Text Colors */
+    --color-text-primary: #ffffff;
+    /* White Text */
+    --color-text-secondary: #b0b0b0;
+    /* Light Gray Text */
+
+    /* Border and Divider */
+    --color-border: #2e2e2e;
+    /* Dark Border */
+    --color-divider: #444444;
+    /* Divider Color */
+
+    /* Interactive States */
+    --color-hover: #555555;
+    /* Lighter Hover */
+    --color-focus: #777777;
+    /* Focus State */
+
+    /* Button and Actions */
+    --color-button-bg: #1a1a1a;
+    /* Black Buttons */
+    --color-button-text: #ffffff;
+    /* White Text on Buttons */
+}
+
+.input {
+    background-color: var(--color-secondary);
+    color: var(--color-text-primary);
+}
