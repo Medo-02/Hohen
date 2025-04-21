@@ -1,10 +1,8 @@
 <nav class="bg-primary-900 py-3 px-3 shadow-2 flex align-items-center justify-content-between gap-4 relative lg:static border-bottom-1 border-gray-800" dir="rtl">
     <div class="flex align-items-center gap-4">
         <a class="cursor-pointer" (click)="redirectTo('')"><img src="assets/icons/Logo.png" alt="Logo" style="height: 64px; width: auto;"></a>
-        <div class="hidden md:flex align-items-center gap-8">
-            <a class="cursor-pointer hover:text-primary-500 text-xl" (click)="redirectTo('')">الرئيسية <i class="pi pi-home text-center px-2"></i></a>
-            <a class="cursor-pointer hover:text-primary-500 text-xl" (click)="redirectTo('products')">المنتجات</a>
-            <a class="cursor-pointer hover:text-primary-500 text-xl">من نحن</a>
+        <div class="hidden md:flex">
+            <app-nav-items class="flex flex-row gap-8"></app-nav-items>
         </div>
     </div>
     <p-button class="md:hidden flex" icon="pi pi-bars" aria-label="Save" variant="text" [raised]="true" (onClick)="showSideBar=true"></p-button>
@@ -22,11 +20,6 @@
             <input pInputText placeholder="Keyword" />
             <p-button icon="pi pi-search" label="ابحث" severity="primary" />
         </p-inputgroup>
-        <div class="flex flex-col align-items-center gap-5">
-            <a class="cursor-pointer hover:text-primary-500 text-xl" (click)="redirectTo('')">الرئيسية <i
-                    class="pi pi-home text-center px-2"></i></a>
-            <a class="cursor-pointer hover:text-primary-500 text-xl" (click)="redirectTo('products')">المنتجات</a>
-            <a class="cursor-pointer hover:text-primary-500 text-xl">من نحن</a>
-        </div>
+            <app-nav-items class="flex flex-col gap-5 align-items-center"></app-nav-items>
     </div>
 </p-drawer>

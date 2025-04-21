@@ -7,12 +7,20 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
+import { NavItemsComponent } from './nav-items.component';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [InputTextModule, FormsModule, MenubarModule,
-    InputGroupModule, InputGroupAddonModule, ButtonModule,
-    DrawerModule
+  imports: [
+    InputTextModule, 
+    FormsModule, 
+    MenubarModule,
+    InputGroupModule, 
+    InputGroupAddonModule, 
+    ButtonModule,
+    DrawerModule,
+    NavItemsComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
@@ -23,8 +31,7 @@ export class NavbarComponent {
   
   constructor(private router: Router) { }
   
-  redirectTo(path: String) {
-    this.router.navigate([path])
+  redirectTo(path: string) {
+    this.router.navigate([path]);
   }
-
 }
