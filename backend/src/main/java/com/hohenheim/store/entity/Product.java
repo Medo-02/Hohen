@@ -1,12 +1,16 @@
 package com.hohenheim.store.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="product")
@@ -31,9 +35,6 @@ public class Product {
     @Column(name = "unitPrice")
     private BigDecimal unitPrice;
 
-    @Column(name = "imageUrl")
-    private String imageUrl;
-
     @Column(name = "active")
     private boolean active;
 
@@ -47,6 +48,10 @@ public class Product {
     @Column(name = "lastUpdated")
     @UpdateTimestamp
     private Date lastUpdated;
+
+    // Create relationship between product and images
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ProductImage> productImages = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -88,13 +93,6 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public boolean isActive() {
         return active;
@@ -120,12 +118,12 @@ public class Product {
         this.dateCreated = dateCreated;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
+    public List<ProductImage> getProductImages() {
+        return productImages;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public void setProductImages(List<ProductImage> productImages) {
+        this.productImages = productImages;
     }
 
     @Override
@@ -136,10 +134,10 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", unitPrice=" + unitPrice +
-                ", imageUrl='" + imageUrl + '\'' +
                 ", active=" + active +
                 ", unitsInStock=" + unitsInStock +
                 ", dateCreated=" + dateCreated +
+                ", productImages=" + productImages +
                 ", lastUpdated=" + lastUpdated +
                 '}';
     }
