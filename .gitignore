@@ -128,3 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+/frontend/hohen-store/src/app/environments
+frontend/hohen-store/src/app/environments/enviornment.ts
