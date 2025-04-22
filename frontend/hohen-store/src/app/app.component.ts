@@ -4,6 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './Components/navbar/navbar.component';
+import { OktaAuthStateService, OKTA_CONFIG } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
+import { environment } from './environments/enviornment';
+
+const oktaAuth = new OktaAuth(environment.oidc);
 
 @Component({
   selector: 'app-root',
@@ -16,6 +21,10 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
     SelectButtonModule,
     RouterModule,
     NavbarComponent
+  ],
+  providers: [
+    OktaAuthStateService,
+    { provide: OKTA_CONFIG, useValue: { oktaAuth } }
   ]
 })
 export class AppComponent {

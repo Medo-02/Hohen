@@ -8,20 +8,22 @@ import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
 import { NavItemsComponent } from './nav-items.component';
+import { LoginStatusComponent } from "../login/login-status/login-status.component";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    InputTextModule, 
-    FormsModule, 
+    InputTextModule,
+    FormsModule,
     MenubarModule,
-    InputGroupModule, 
-    InputGroupAddonModule, 
+    InputGroupModule,
+    InputGroupAddonModule,
     ButtonModule,
     DrawerModule,
-    NavItemsComponent
-  ],
+    NavItemsComponent,
+    LoginStatusComponent
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
