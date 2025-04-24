@@ -1,7 +1,6 @@
 package com.hohenheim.store.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.Set;
 @Entity
