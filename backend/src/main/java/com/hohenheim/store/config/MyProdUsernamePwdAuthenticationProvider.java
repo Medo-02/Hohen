@@ -13,9 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("!prod")
+@Profile("prod")
 @RequiredArgsConstructor
-public class MyUsernamePwdAuthenticationProvider implements AuthenticationProvider {
+public class MyProdUsernamePwdAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -25,7 +25,12 @@ public class MyUsernamePwdAuthenticationProvider implements AuthenticationProvid
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        return new UsernamePasswordAuthenticationToken(userDetails, pwd, userDetails.getAuthorities());
+
+        if(passwordEncoder.matches(pwd, userDetails.getPassword())) {
+            return new UsernamePasswordAuthenticationToken(userDetails, pwd, userDetails.getAuthorities());
+        } else {
+            throw new BadCredentialsException("Invalid Password");
+        }
     }
 
     @Override
