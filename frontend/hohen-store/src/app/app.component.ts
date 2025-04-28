@@ -7,6 +7,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { OktaAuthStateService, OKTA_CONFIG } from '@okta/okta-angular';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { environment } from './environments/enviornment';
+import { FooterComponent } from './Components/footer/footer.component';
 
 const oktaAuth = new OktaAuth(environment.oidc);
 
@@ -20,7 +21,8 @@ const oktaAuth = new OktaAuth(environment.oidc);
     FormsModule,
     SelectButtonModule,
     RouterModule,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   providers: [
     OktaAuthStateService,

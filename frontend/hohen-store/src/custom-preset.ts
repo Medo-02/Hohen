@@ -3,93 +3,72 @@ import Aura from '@primeng/themes/aura';
 
 const MyPreset = definePreset(Aura, {
     semantic: {
-        // Primary color palette using gray
         primary: {
-            50: '{gray.50}',
-            100: '{gray.100}',
-            200: '{gray.200}',
-            300: '{gray.300}',
-            400: '{gray.400}',
-            500: '{gray.500}',
-            600: '{gray.600}',
-            700: '{gray.700}',
-            800: '{gray.800}',
+            50: '#ffcccc',
+            100: '#ff9999',
+            200: '#ff6666',
+            300: '#ff3333',
+            400: '#ff0000',
+            500: '#cc0000',
+            600: '#990000',
+            700: '#660000',
+            800: '#330000',
+            900: '#1a0000',
+            950: '#0d0000'
+        },
+        secondary: {
+            50: '#f1f1f1',
+            100: '#dcdcdc',
+            200: '#c0c0c0',
+            300: '#a5a5a5',
+            400: '#808080',
+            500: '#595959',
+            600: '#404040',
+            700: '#262626',
+            800: '#1a1a1a',
             900: '#000000',
             950: '#000000'
         },
-        // Light and Dark mode surface tones
         colorScheme: {
-            light: {
-                surface: {
-                    0: '#ffffff',
-                    50: '{zinc.50}',
-                    100: '{zinc.100}',
-                    200: '{zinc.200}',
-                    300: '{zinc.300}',
-                    400: '{zinc.400}',
-                    500: '{zinc.500}',
-                    600: '{zinc.600}',
-                    700: '{zinc.700}',
-                    800: '{zinc.800}',
-                    900: '{zinc.900}',
-                    950: '{zinc.950}'
-                },
-                formField: {
-                    hoverBorderColor: '{primary.color}'
-                }
+            surface: {
+                0: '#ffffff',
+                50: '#f5f5f5',
+                100: '#e0e0e0',
+                200: '#cccccc',
+                300: '#b3b3b3',
+                400: '#999999',
+                500: '#808080',
+                600: '#666666',
+                700: '#4d4d4d',
+                800: '#333333',
+                900: '#1a1a1a',
+                950: '#000000'
             },
-            dark: {
-                surface: {
-                    0: '#ffffff',
-                    50: '{slate.50}',
-                    100: '{slate.100}',
-                    200: '{slate.200}',
-                    300: '{slate.300}',
-                    400: '{slate.400}',
-                    500: '{slate.500}',
-                    600: '{slate.600}',
-                    700: '{slate.700}',
-                    800: '{slate.800}',
-                    900: '{slate.900}',
-                    950: '{slate.950}'
-                },
-                formField: {
-                    background: '{secondary.color}',
-                    hoverBorderColor: '{primary.color}'
-                }
+            formField: {
+                hoverBorderColor: '{primary.color}',
+                background: '#ffffff'
             }
         },
-        // Focus ring customization
         focusRing: {
             width: '2px',
             style: 'dashed',
-            color: '{primary.color}',
+            color: '{primary.400}',
             offset: '1px'
         }
     },
     components: {
         card: {
             colorScheme: {
-                light: {
-                    root: {
-                        background: '{surface.0}',
-                        color: '{surface.700}'
-                    },
-                    subtitle: {
-                        color: '{surface.500}'
-                    }
+                root: {
+                    background: '{surface.0}',
+                    color: '{surface.700}'
                 },
-                dark: {
-                    root: {
-                        background: '{surface.900}',
-                        color: '{surface.0}'
-                    },
-                    subtitle: {
-                        color: '{surface.400}'
-                    }
+                subtitle: {
+                    color: '{surface.500}'
                 }
             }
-        }
+        },
+        // Add p-button here if needed
     }
 });
 
