@@ -7,6 +7,7 @@ import com.hohenheim.store.dao.UserRepository;
 import com.hohenheim.store.entity.LoginRequest;
 import com.hohenheim.store.entity.LoginResponse;
 import com.hohenheim.store.entity.User;
+import com.hohenheim.store.service.JwtService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final Environment env;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
@@ -73,20 +74,7 @@ public class UserController {
         Authentication authenticationResponse = authenticationManager.authenticate(authentication);
 
         if (authenticationResponse != null && authenticationResponse.isAuthenticated()) {
-
-            if (env != null) {
-                String secret = env.getProperty(ApplicationConstants.JWT_SECRET_KEY,
-                        ApplicationConstants.JWT_SECRET_DEFAULT_VALUE);
-                SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-
-                jwt = Jwts.builder().issuer("Hohenheim").subject("JWT Token")
-                        .claim("username", authenticationResponse.getName())
-                        .claim("authorities", authenticationResponse.getAuthorities().stream().map(
-                                GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
-                        .issuedAt(new Date())
-                        .expiration(new Date(new Date().getTime() + 30000000))
-                        .signWith(secretKey).compact();
-            }
+            jwt = jwtService.generateToken(authenticationResponse);
         }
         return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(HttpStatus.OK.getReasonPhrase(), jwt));
     }
