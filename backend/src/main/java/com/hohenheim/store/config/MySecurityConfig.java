@@ -1,5 +1,6 @@
 package com.hohenheim.store.config;
 
+import com.hohenheim.store.filter.AuthoritiesLoggingAfterFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -35,6 +37,7 @@ public class MySecurityConfig {
                 return config;
             }
         }))
+                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .authorizeHttpRequests((requests) -> requests
