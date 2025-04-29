@@ -3,7 +3,9 @@ package com.hohenheim.store.config;
 import com.hohenheim.store.filter.AuthoritiesLoggingAfterFilter;
 import com.hohenheim.store.filter.JWTTokenGeneratorFilter;
 import com.hohenheim.store.filter.JWTTokenValidatorFilter;
+import com.hohenheim.store.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -26,8 +28,11 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
+@RequiredArgsConstructor
 @Profile("!prod")
 public class MySecurityConfig {
+
+    private final JwtService jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,14 +52,14 @@ public class MySecurityConfig {
         }))
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new JWTTokenGeneratorFilter(jwtService), BasicAuthenticationFilter.class)
                 .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/register").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/login").permitAll()
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/products").authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());  // Handle HTTP Basic login
         return http.build();
