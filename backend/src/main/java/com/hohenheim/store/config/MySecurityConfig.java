@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -51,11 +53,22 @@ public class MySecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/register").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/api/**").permitAll()
                 )
-                .formLogin(Customizer.withDefaults())  // Handle default form login
                 .httpBasic(Customizer.withDefaults());  // Handle HTTP Basic login
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
+                                                       PasswordEncoder passwordEncoder) {
+        MyUsernamePwdAuthenticationProvider authenticationProvider = new MyUsernamePwdAuthenticationProvider(userDetailsService, passwordEncoder);
+        ProviderManager providerManager = new ProviderManager(authenticationProvider);
+        providerManager.setEraseCredentialsAfterAuthentication(false);
+
+        return providerManager;
+
     }
 
 
