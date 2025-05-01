@@ -1,9 +1,6 @@
 package com.hohenheim.store.config;
 
 import com.hohenheim.store.filter.AuthoritiesLoggingAfterFilter;
-import com.hohenheim.store.filter.JWTTokenGeneratorFilter;
-import com.hohenheim.store.filter.JWTTokenValidatorFilter;
-import com.hohenheim.store.service.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +14,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -32,7 +27,6 @@ import java.util.Collections;
 @Profile("!prod")
 public class MySecurityConfig {
 
-    private final JwtService jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -50,9 +44,7 @@ public class MySecurityConfig {
                 return config;
             }
         }))
-                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(jwtService), BasicAuthenticationFilter.class)
                 .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .authorizeHttpRequests((requests) -> requests
@@ -65,31 +57,6 @@ public class MySecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
-                                                       PasswordEncoder passwordEncoder) {
-        MyUsernamePwdAuthenticationProvider authenticationProvider = new MyUsernamePwdAuthenticationProvider(userDetailsService, passwordEncoder);
-        ProviderManager providerManager = new ProviderManager(authenticationProvider);
-        providerManager.setEraseCredentialsAfterAuthentication(false);
-
-        return providerManager;
-
-    }
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(DataSource dataSource) {
-//        return new JdbcUserDetailsManager(dataSource);
-//    }
-
-    // configure password checker to check against compromised passwords and prevent default credentials
-//    @Bean
-//    public CompromisedPasswordChecker compromisedPasswordChecker(){
-//        return new HaveIBeenPwnedRestApiPasswordChecker();
-//    }
 }

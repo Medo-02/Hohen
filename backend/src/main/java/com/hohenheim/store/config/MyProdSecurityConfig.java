@@ -45,19 +45,4 @@ public class MyProdSecurityConfig {
     }
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(DataSource dataSource) {
-//        return new JdbcUserDetailsManager(dataSource);
-//    }
-
-    // configure password checker to check against compromised passwords and prevent default credentials
-//    @Bean
-//    public CompromisedPasswordChecker compromisedPasswordChecker(){
-//        return new HaveIBeenPwnedRestApiPasswordChecker();
-//    }
 }
