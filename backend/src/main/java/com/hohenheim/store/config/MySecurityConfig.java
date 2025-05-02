@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -30,6 +31,8 @@ public class MySecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
         http.sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .cors(corsConfig -> corsConfig.configurationSource(new CorsConfigurationSource() {
             @Override
@@ -50,10 +53,10 @@ public class MySecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/register").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/api/products").authenticated()
-                )
-                .httpBasic(Customizer.withDefaults());  // Handle HTTP Basic login
+                );
+                http.oauth2ResourceServer(rsc -> rsc.jwt(
+                        jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter)));
         return http.build();
     }
 
