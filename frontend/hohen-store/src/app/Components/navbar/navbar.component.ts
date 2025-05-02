@@ -8,7 +8,6 @@ import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
 import { NavItemsComponent } from './nav-items.component';
-import { LoginStatusComponent } from "../login/login-status/login-status.component";
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,7 +22,6 @@ import { CommonModule } from '@angular/common';
     ButtonModule,
     DrawerModule,
     NavItemsComponent,
-    LoginStatusComponent,
     CommonModule
 ],
   templateUrl: './navbar.component.html',
