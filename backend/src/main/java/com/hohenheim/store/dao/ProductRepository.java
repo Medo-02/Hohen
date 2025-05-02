@@ -10,7 +10,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 // accept calls from web browser
-@CrossOrigin("http://localhost:4200")
 @RepositoryRestResource(excerptProjection = ProductWithImages.class)
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
