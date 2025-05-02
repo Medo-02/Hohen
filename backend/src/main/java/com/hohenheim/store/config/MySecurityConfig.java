@@ -6,14 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -27,7 +22,6 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Profile("!prod")
 public class MySecurityConfig {
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -51,15 +45,25 @@ public class MySecurityConfig {
                 .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure())
                 .csrf(csrfConfig -> csrfConfig.disable())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/register").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/products").authenticated()
+//                        .requestMatchers("/api/register").permitAll()
+//                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+//
+//                        // Allow GET access without authentication
+//                        .requestMatchers(HttpMethod.GET,"/api/products/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET,"/api/productImages/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET,"/api/product-category/**").permitAll()
+//
+//                        // Require authentication for all other methods
+//                        .requestMatchers("/api/products/**").authenticated()
+//                        .requestMatchers("/api/productImages/**").authenticated()
+//                        .requestMatchers("/api/product-category/**").authenticated()
+//
+//                        // All other requests must be authenticated
+                        .anyRequest().permitAll()
                 );
                 http.oauth2ResourceServer(rsc -> rsc.jwt(
                         jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter)));
         return http.build();
     }
-
-
 
 }
