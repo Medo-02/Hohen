@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { environment } from './environments/enviornment';
 import { FooterComponent } from './Components/footer/footer.component';
+import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType } from 'keycloak-angular';
 
 
 @Component({
@@ -23,6 +24,16 @@ import { FooterComponent } from './Components/footer/footer.component';
   ],
 })
 export class AppComponent {
+
+  private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
+
+  constructor(private router: Router) {
+    effect(async () => {
+      if (this.keycloakSignal().type === KeycloakEventType.AuthRefreshError) {
+        await this.router.navigate(['/', 'logout']);
+      }
+    });
+  }
   title = 'hohen-store';
   
   stateOptions: any[] = [

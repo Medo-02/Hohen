@@ -24,6 +24,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies":[
+              "base64-js",
+              "js-sha256"
+            ],
             "outputPath": "dist/hohen-store",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -45,8 +49,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/primeflex/primeflex.css",
-              "node_modules/@okta/okta-signin-widget/dist/css/okta-sign-in.min.css"
+              "node_modules/primeflex/primeflex.css"
             ],
             "scripts": []
           },

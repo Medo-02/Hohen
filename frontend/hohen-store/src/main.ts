@@ -6,8 +6,8 @@ import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import routeConfig from './app/routes';
-import { environment } from './app/environments/enviornment';
 import MyPreset from './custom-preset';
+import { provideKeycloakAndInterceptor } from './app/interceptors/KeycloakAndInterceptor';
 
 
 bootstrapApplication(AppComponent, {
@@ -21,5 +21,6 @@ bootstrapApplication(AppComponent, {
     }),
     provideHttpClient(),
     provideRouter(routeConfig),
+    provideKeycloakAndInterceptor()
   ],
 }).catch((err) => console.error(err));
