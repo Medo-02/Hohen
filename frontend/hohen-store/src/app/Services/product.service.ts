@@ -16,15 +16,22 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(): Observable<Product[]> {
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
-      map(response => response._embedded.products)
+  getProductList(first: number, rows: number): Observable<{ products: Product[], totalElements: number }> {
+    return this.httpClient.get<GetResponse>(this.baseUrl+`?page=${first/rows}&size=${rows}`).pipe(
+      map(response => ({
+        products: response._embedded.products,
+        totalElements: response.page.totalElements
+      }))
     );
   }
 }
 
+
 interface GetResponse {
   _embedded: {
     products: Product[];
-  }
+  };
+  page: {
+    totalElements: number;
+  };
 }

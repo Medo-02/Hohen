@@ -1,4 +1,7 @@
-<p>product-list works!</p>
-@for (product of products; track $index) {
-    <p class="font-bold">{{product.name}}: {{product.unitPrice}}</p>
-}
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 30]" />
+<div class="grid">
+    @for (item of products; track $index) {
+            <app-product-card class="col-10 md:col-4 lg:col-3 md:mx-0 mx-auto" [product]="item"></app-product-card>
+    }
+</div>

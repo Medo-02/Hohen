@@ -1,6 +1,7 @@
 package com.hohenheim.store.projection;
 
 import com.hohenheim.store.entity.Product;
+import com.hohenheim.store.entity.ProductCategory;
 import com.hohenheim.store.entity.ProductImage;
 import org.springframework.data.rest.core.config.Projection;
 
@@ -15,5 +16,6 @@ public interface ProductWithImages {
     BigDecimal getUnitPrice();
     boolean getActive();
     int getUnitsInStock();
-    List<ProductImage> getProductImages(); 
+    List<ProductImage> getProductImages();
+    ProductCategory getCategory();
 }
