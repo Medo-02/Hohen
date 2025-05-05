@@ -128,7 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-/frontend/hohen-store/src/app/environments
-frontend/hohen-store/src/app/environments/enviornment.ts
 /backend/src/main/java/com/hohenheim/store/constants
 backend/src/main/java/com/hohenheim/store/config/OpenApiConfig.java
