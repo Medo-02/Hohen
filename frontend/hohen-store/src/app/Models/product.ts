@@ -1,12 +1,10 @@
+import { Category } from "./category";
+
 export interface ProductImage {
   id: number;
   imageUrl: string;
 }
 
-export interface Category {
-  id: number;
-  categoryName: string;
-}
 
 export class Product {
     constructor(

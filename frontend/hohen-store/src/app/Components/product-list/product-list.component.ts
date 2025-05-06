@@ -8,13 +8,17 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
+import { CategoryService } from '../../Services/category.service';
+import { Category } from '../../Models/category';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
-  imports: [CommonModule, ProductCardComponent, PaginatorModule, SelectModule, FormsModule, ToastModule],
+  imports: [CommonModule, ProductCardComponent, PaginatorModule, SelectModule, FormsModule, ToastModule, CheckboxModule, ButtonModule],
   providers: [MessageService]
 })
 export class ProductListComponent implements OnInit{
@@ -23,12 +27,14 @@ export class ProductListComponent implements OnInit{
   items: MenuItem[];
   selectedSort: String | undefined;
   sortType: String | undefined;
+  categories: Category[] = [];
+  selectedCategory: Category | undefined;
 
   first: number = 0; // first record index 
   rows: number = 10; // Number of records per page
   totalRecords: number = 0;   // Total number of records available
 
-  constructor(private productService: ProductService, private messageService: MessageService) { 
+  constructor(private productService: ProductService, private messageService: MessageService, private categoryService: CategoryService) { 
     this.items = [
       { label: 'السعر الأعلى', value: { field: 'unitPrice', order: 'desc' } },
       { label: 'السعر الأقل', value: { field: 'unitPrice', order: 'asc' } }
@@ -37,6 +43,8 @@ export class ProductListComponent implements OnInit{
   
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCategories();
+
   }
   
   loadProducts() {
@@ -44,6 +52,14 @@ export class ProductListComponent implements OnInit{
       data => {
         this.products = data.products;
         this.totalRecords = data.totalElements
+      }
+    )
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe(
+      data => {
+        this.categories = data
       }
     )
   }
@@ -71,6 +87,10 @@ export class ProductListComponent implements OnInit{
     this.first = 0;
     this.rows = 10;
     this.loadProducts();
+  }
+
+  onCategoryChange(event: any) {
+    
   }
 
 }
