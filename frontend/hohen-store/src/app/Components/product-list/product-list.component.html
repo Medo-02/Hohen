@@ -1,22 +1,54 @@
 <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
-<div class="bg-[var(--p-secondary-900)] p-4 mb-4 rounded-lg shadow-lg flex justify-content-around">
-    <p-select [options]="items" [(ngModel)]="selectedSort" optionLabel="label" optionValue="value" placeholder="فرز" [showClear]="true"
-        [checkmark]="true" class="w-[12rem]" (onChange)="onSortChange($event)" />
 
-        <div class="flex gap-4">
-            @for (category of categories; track $index) {
-                <div class="flex items-center">
-                    <p-checkbox size="large" [inputId]="category.id+''" name="group" (onChange)="onCategoryChange($event)" [value]="category" [(ngModel)]="selectedCategory" />
-                    <label [for]="category.id+''" class="mr-2 text-base"> {{category.categoryName}} </label>
-                </div>
-            }
+<div class="grid p-4">
+    <!-- Sort Section -->
+    <div class="col-12 md:col-3">
+        <p-floatlabel class="w-full mt-7">
+            <p-select 
+                class="w-full" 
+                [options]="items" 
+                [(ngModel)]="selectedSort" 
+                optionLabel="label" 
+                optionValue="value"
+                inputId="over_label" 
+                [showClear]="true" 
+                [checkmark]="true" 
+                (onChange)="onSortChange($event)" 
+            />
+            <label class="text-base" for="over_label">الفرز</label>
+        </p-floatlabel>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="col-12 md:col-9">
+        <div class="p-4 rounded-lg shadow-lg">
+            <h1 class="text-xl mb-4">التصنيفات</h1>
+            <div class="grid">
+                @for (category of categories; track $index) {
+                    <div class="col-12 md:col-4 lg:col-3">
+                        <div class="flex items-center">
+                            <p-checkbox 
+                                size="large" 
+                                [inputId]="category.id+''" 
+                                name="group" 
+                                (onChange)="onCategoryChange($event)"
+                                [value]="category" 
+                                [(ngModel)]="selectedCategory" 
+                            />
+                            <label [for]="category.id+''" class="mr-2 text-base"> {{category.categoryName}} </label>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-
+    </div>
 </div>
+
 <div class="grid">
     @for (item of products; track $index) {
-            <app-product-card class="col-10 md:col-4 lg:col-3 md:mx-0 mx-auto" [product]="item"></app-product-card>
+        <app-product-card class="col-12 md:col-4 lg:col-3" [product]="item"></app-product-card>
     }
 </div>
+
 <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
     [rowsPerPageOptions]="[10, 20, 30]" />

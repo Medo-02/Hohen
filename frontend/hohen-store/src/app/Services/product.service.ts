@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/enviornment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../Models/product';
 import { map } from 'rxjs/operators';
+import { Category } from '../Models/category';
 
 
 
@@ -15,12 +16,24 @@ export class ProductService {
   private baseUrl = environment.BASE_URL + "products";
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(first: number, rows: number, sortType: String): Observable<{ products: Product[], totalElements: number }> {
-    let params = `?page=${Math.floor(first / rows)}&size=${rows}`;
+  getProductList(first: number, rows: number, sortType: string, categories: Category[]): Observable<{ products: Product[], totalElements: number }> {
+      let params = new HttpParams()
+      .set('page', Math.floor(first / rows).toString())
+      .set('size', rows.toString());
+
+    if (categories && categories.length !== 0) {
+      categories.forEach(category => params = params.append('categories', category.id));
+    } 
+
     if (sortType !== undefined) {
-      params+= `&sort=${sortType}`
+      params = params.set('sort', sortType);
     }
-    return this.httpClient.get<GetResponse>(this.baseUrl+params).pipe(
+
+    const url = categories && categories.length !== 0
+      ? `${this.baseUrl}/search/findByCategoryIds`
+      : this.baseUrl;
+
+    return this.httpClient.get<GetResponse>(url, {params}).pipe(
       map(response => ({
         products: response._embedded.products,
         totalElements: response.page.totalElements

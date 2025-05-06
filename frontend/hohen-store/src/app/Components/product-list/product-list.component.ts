@@ -12,23 +12,25 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CategoryService } from '../../Services/category.service';
 import { Category } from '../../Models/category';
 import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
-  imports: [CommonModule, ProductCardComponent, PaginatorModule, SelectModule, FormsModule, ToastModule, CheckboxModule, ButtonModule],
+  imports: [CommonModule, ProductCardComponent, PaginatorModule, SelectModule, FormsModule,
+    ToastModule, CheckboxModule, ButtonModule, FloatLabelModule],
   providers: [MessageService]
 })
 export class ProductListComponent implements OnInit{
 
   products: Product[] = [];
   items: MenuItem[];
-  selectedSort: String | undefined;
-  sortType: String | undefined;
+  selectedSort: string | undefined;
+  sortType: string | undefined;
   categories: Category[] = [];
-  selectedCategory: Category | undefined;
+  selectedCategory: Category[] | undefined;
 
   first: number = 0; // first record index 
   rows: number = 10; // Number of records per page
@@ -48,7 +50,7 @@ export class ProductListComponent implements OnInit{
   }
   
   loadProducts() {
-    this.productService.getProductList(this.first, this.rows, this.sortType!).subscribe(
+    this.productService.getProductList(this.first, this.rows, this.sortType!, this.selectedCategory!).subscribe(
       data => {
         this.products = data.products;
         this.totalRecords = data.totalElements
@@ -90,7 +92,14 @@ export class ProductListComponent implements OnInit{
   }
 
   onCategoryChange(event: any) {
-    
+    this.first = 0;
+    this.rows = 10;
+    this.loadProducts();
+    this.messageService.add({
+        severity: 'info',
+        summary: 'تم التصنيف',
+        detail: `تم تحديث المتجات حسب التصنيفات المختارة`
+      });
   }
 
 }
