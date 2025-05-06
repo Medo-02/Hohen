@@ -130,3 +130,4 @@ dist
 .pnp.*
 /backend/src/main/java/com/hohenheim/store/constants
 backend/src/main/java/com/hohenheim/store/config/OpenApiConfig.java
+frontend/hohen-store/src/app/environments/enviornment.ts

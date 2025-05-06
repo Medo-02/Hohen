@@ -1,7 +1,12 @@
-<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
-    [rowsPerPageOptions]="[10, 20, 30]" />
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+<div class="bg-[var(--p-secondary-900)] p-4 mb-4 rounded-lg shadow-lg">
+    <p-select [options]="items" [(ngModel)]="selectedSort" optionLabel="label" optionValue="value" placeholder="فرز" [showClear]="true"
+        [checkmark]="true" class="w-[12rem]" (onChange)="onSortChange($event)" />
+</div>
 <div class="grid">
     @for (item of products; track $index) {
             <app-product-card class="col-10 md:col-4 lg:col-3 md:mx-0 mx-auto" [product]="item"></app-product-card>
     }
 </div>
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[10, 20, 30]" />

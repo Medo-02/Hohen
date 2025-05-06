@@ -13,11 +13,14 @@ import { map } from 'rxjs/operators';
 export class ProductService {
 
   private baseUrl = environment.BASE_URL + "products";
-
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(first: number, rows: number): Observable<{ products: Product[], totalElements: number }> {
-    return this.httpClient.get<GetResponse>(this.baseUrl+`?page=${first/rows}&size=${rows}`).pipe(
+  getProductList(first: number, rows: number, sortType: String): Observable<{ products: Product[], totalElements: number }> {
+    let params = `?page=${Math.floor(first / rows)}&size=${rows}`;
+    if (sortType !== undefined) {
+      params+= `&sort=${sortType}`
+    }
+    return this.httpClient.get<GetResponse>(this.baseUrl+params).pipe(
       map(response => ({
         products: response._embedded.products,
         totalElements: response.page.totalElements
