@@ -9,16 +9,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 import java.util.List;
 
-@RepositoryRestResource(excerptProjection = ProductWithImages.class)
+@RepositoryRestResource(excerptProjection = ProductWithImages.class, path = "products", collectionResourceRel = "products")
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
-    @Query("SELECT p FROM Product p WHERE p.category.id IN :categories")
-    Page<Product> findByCategoryIds(@Param("categories") List<Long> categoryIds, Pageable pageable);
-
-    // Example search/findByNameContaining?name=Java&page=0&size=20'
-    Page<Product> findByNameContaining(@Param("name") String name, Pageable pageable);
-
+    // search/findByNameAndCategory?name=Asus&categories=1&page=0&size=20&sort=unitPrice=desc
+    @Query("SELECT p FROM Product p WHERE (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
+           "AND (:categories IS NULL OR p.category.id IN :categories)")
+    Page<Product> findByNameAndCategory(
+        @Param("name") String name,
+        @Param("categories") List<Long> categories,
+        Pageable pageable
+    );
 }
