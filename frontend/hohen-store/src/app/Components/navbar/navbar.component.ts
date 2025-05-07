@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
 import { NavItemsComponent } from './nav-items.component';
 import { CommonModule } from '@angular/common';
+import { SearchComponent } from "../search/search.component";
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,8 @@ import { CommonModule } from '@angular/common';
     ButtonModule,
     DrawerModule,
     NavItemsComponent,
-    CommonModule
+    CommonModule,
+    SearchComponent,
 ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'

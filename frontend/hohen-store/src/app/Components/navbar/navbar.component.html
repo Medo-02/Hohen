@@ -8,19 +8,13 @@
     </div>
     <p-button class="md:hidden flex" icon="pi pi-bars" aria-label="Save" variant="text" [raised]="true" (onClick)="showSideBar=true"></p-button>
     <div class="hidden md:flex align-items-center gap-4">
-        <p-inputgroup>
-            <input pInputText placeholder="Keyword" />
-            <p-button icon="pi pi-search" label="ابحث" severity="primary" />
-        </p-inputgroup>
+        <app-search></app-search>
     </div>
 </nav>
 
 <p-drawer [(visible)]="showSideBar">
     <div class="flex flex-col align-items-center gap-4">
-        <p-inputgroup>
-            <input pInputText placeholder="Keyword" />
-            <p-button icon="pi pi-search" label="ابحث" severity="primary" />
-        </p-inputgroup>
-            <app-nav-items class="flex flex-col gap-5 align-items-center"></app-nav-items>
+        <app-search></app-search>
+        <app-nav-items class="flex flex-col gap-5 align-items-center"></app-nav-items>
     </div>
 </p-drawer>
