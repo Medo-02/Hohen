@@ -13,6 +13,7 @@ import { CategoryService } from '../../Services/category.service';
 import { Category } from '../../Models/category';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -31,12 +32,15 @@ export class ProductListComponent implements OnInit{
   sortType: string | undefined;
   categories: Category[] = [];
   selectedCategory: Category[] | undefined;
+  searchTerm: string | undefined;
 
   first: number = 0; // first record index 
   rows: number = 10; // Number of records per page
   totalRecords: number = 0;   // Total number of records available
 
-  constructor(private productService: ProductService, private messageService: MessageService, private categoryService: CategoryService) { 
+  constructor(private productService: ProductService, private messageService: MessageService, private categoryService: CategoryService,
+    private router: ActivatedRoute
+  ) { 
     this.items = [
       { label: 'السعر الأعلى', value: { field: 'unitPrice', order: 'desc' } },
       { label: 'السعر الأقل', value: { field: 'unitPrice', order: 'asc' } }
@@ -44,13 +48,16 @@ export class ProductListComponent implements OnInit{
   }
   
   ngOnInit(): void {
-    this.loadProducts();
+    this.router.queryParams.subscribe(values => {
+      this.searchTerm = values['search'];
+      }
+    )
     this.loadCategories();
-
+    this.loadProducts();
   }
   
   loadProducts() {
-    this.productService.getProductList(this.first, this.rows, this.sortType!, this.selectedCategory!).subscribe(
+    this.productService.getProductList(this.first, this.rows, this.sortType!, this.selectedCategory!, this.searchTerm!).subscribe(
       data => {
         this.products = data.products;
         this.totalRecords = data.totalElements
@@ -73,7 +80,7 @@ export class ProductListComponent implements OnInit{
     this.loadProducts();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
+  // Sort based on price descending and ascending 
   onSortChange(event: any) {
     const value = event.value;
     if (value?.field && value?.order) {
@@ -90,7 +97,7 @@ export class ProductListComponent implements OnInit{
     this.rows = 10;
     this.loadProducts();
   }
-
+  // Filter Category based on selected categories and rest page
   onCategoryChange(event: any) {
     this.first = 0;
     this.rows = 10;

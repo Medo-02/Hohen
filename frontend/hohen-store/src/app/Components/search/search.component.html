@@ -1,4 +1,4 @@
 <p-inputgroup>
-    <input pInputText placeholder="Keyword" [(ngModel)]="keyword"/>
-    <p-button icon="pi pi-search" label="ابحث" severity="primary" (onClick)="search()"/>
+    <input (keydown.enter)="search()" pInputText placeholder="ابحث" [(ngModel)]="keyword"/>
+    <p-button icon="pi pi-search" severity="primary" (onClick)="search()"/>
 </p-inputgroup>

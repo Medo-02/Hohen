@@ -2,8 +2,8 @@
 
 <div class="grid p-4">
     <!-- Sort Section -->
-    <div class="col-12 md:col-3">
-        <p-floatlabel class="w-full mt-7">
+    <div class="col-12 md:col-1">
+        <p-floatlabel class="w-full md:mt-7 m-0">
             <p-select 
                 class="w-full" 
                 [options]="items" 
@@ -24,6 +24,7 @@
         <div class="p-4 rounded-lg shadow-lg">
             <h1 class="text-xl mb-4">التصنيفات</h1>
             <div class="grid">
+                <!-- Display categories -->
                 @for (category of categories; track $index) {
                     <div class="col-12 md:col-4 lg:col-3">
                         <div class="flex items-center">
@@ -39,6 +40,7 @@
                         </div>
                     </div>
                 }
+                
             </div>
         </div>
     </div>

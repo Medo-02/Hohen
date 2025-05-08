@@ -13,14 +13,14 @@ import { Category } from '../Models/category';
 })
 export class ProductService {
 
-  private baseUrl = environment.BASE_URL + "products";
+  private baseUrl = environment.BASE_URL + "products/search/findByNameAndCategory";
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(first: number, rows: number, sortType: string, categories: Category[]): Observable<{ products: Product[], totalElements: number }> {
-      let params = new HttpParams()
-      .set('page', Math.floor(first / rows).toString())
-      .set('size', rows.toString());
-
+  getProductList(first: number, rows: number, sortType: string, categories: Category[], searchTerm: string): Observable<{ products: Product[], totalElements: number }> {
+    let params = new HttpParams()
+    .set('page', Math.floor(first / rows).toString()) // Get the page which the first element fall into
+    .set('size', rows.toString()); // Specify the number of elements within the page
+    
     if (categories && categories.length !== 0) {
       categories.forEach(category => params = params.append('categories', category.id));
     } 
@@ -29,11 +29,12 @@ export class ProductService {
       params = params.set('sort', sortType);
     }
 
-    const url = categories && categories.length !== 0
-      ? `${this.baseUrl}/search/findByCategoryIds`
-      : this.baseUrl;
+    if (searchTerm !== undefined) {
+      params = params.set('name', searchTerm);
+    }
 
-    return this.httpClient.get<GetResponse>(url, {params}).pipe(
+
+    return this.httpClient.get<GetResponse>(this.baseUrl, {params}).pipe(
       map(response => ({
         products: response._embedded.products,
         totalElements: response.page.totalElements
