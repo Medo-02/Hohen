@@ -48,7 +48,7 @@
 
 <div class="grid">
     @for (item of products; track $index) {
-        <app-product-card class="col-12 md:col-4 lg:col-3" [product]="item"></app-product-card>
+        <app-product-card (onClick)="selectProduct($event)" class="col-12 md:col-4 lg:col-3" [product]="item"></app-product-card>
     }
 </div>
 

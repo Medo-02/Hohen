@@ -20,7 +20,11 @@ export class SearchComponent {
 
 
   search() {
-    this.router.navigate(['/products'], { queryParams: { search: this.keyword } });
+    if (this.router.url.includes('dashboard')) { // The search triggered in the dashboard page
+      this.router.navigate(['/dashboard/products'], { queryParams: { search: this.keyword } });
+    } else {
+      this.router.navigate(['/products'], { queryParams: { search: this.keyword } });
+    }
   }
 
 }

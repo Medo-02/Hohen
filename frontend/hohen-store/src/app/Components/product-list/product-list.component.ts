@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductService } from '../../Services/product.service';
 import { Product } from '../../Models/product';
 import { CommonModule } from '@angular/common';
@@ -26,6 +26,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProductListComponent implements OnInit{
 
+  @Input() isDashboard: boolean = false;
+  @Output() onClick = new EventEmitter<any>();
+  
+  isEditable: boolean = false;
   products: Product[] = [];
   items: MenuItem[];
   selectedSort: string | undefined;
@@ -48,12 +52,16 @@ export class ProductListComponent implements OnInit{
   }
   
   ngOnInit(): void {
+    this.isEditable = this.isDashboard;
+    // Subscribe to query parameters and reload products whenever they change
     this.router.queryParams.subscribe(values => {
       this.searchTerm = values['search'];
+      // Whenever the searchTerm changes, reload the products
+      this.loadProducts()
       }
     )
     this.loadCategories();
-    this.loadProducts();
+    this.loadProducts(); // Initial load for products
   }
   
   loadProducts() {
@@ -109,4 +117,9 @@ export class ProductListComponent implements OnInit{
       });
   }
 
+  selectProduct(product: Product) {
+    if (this.isEditable) {
+      this.onClick.emit(product);
+    }
+  }
 }

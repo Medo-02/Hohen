@@ -1,1 +1,25 @@
-<p>dashboard-products works!</p>
+<p-toolbar>
+    <ng-template #start>
+        <p-button icon="pi pi-plus" class="mr-2" text severity="secondary" />
+    </ng-template>
+    <ng-template #center>
+        <app-search></app-search>
+    </ng-template>
+    <ng-template #end>
+        <div class="flex align-items-center gap-4">
+            <i class="pi text-xl" [ngClass]="{'pi-trash': selectedAction === 'delete', 'pi-pencil': selectedAction === 'edit'}"></i>
+            <p-select
+                    class="w-full" 
+                    [options]="items" 
+                    [(ngModel)]="selectedAction" 
+                    optionLabel="label" 
+                    optionValue="value"
+                    inputId="over_label" 
+                    placeholder="اختر الإجراء"
+                    [showClear]="true" 
+                    [checkmark]="true">
+                </p-select>
+        </div>
+    </ng-template>
+</p-toolbar>
+<app-product-list (onClick)="selectProduct($event)" [isDashboard]="true"></app-product-list>
