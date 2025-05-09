@@ -1,0 +1,7 @@
+<app-product-card [product]="product"></app-product-card>
+<div class="mb-3 md:text-xl text-sm">
+    <p class="mb-3 font-bold">هل انت متأكد من حذف المنتج ؟</p>
+    <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="conf" />
+    <label for="conf" class="mr-2">متأكد</label>
+</div>
+<p-button label="حذف المنتج" icon="pi pi-trash" [raised]="true" [disabled]="!checked"></p-button>

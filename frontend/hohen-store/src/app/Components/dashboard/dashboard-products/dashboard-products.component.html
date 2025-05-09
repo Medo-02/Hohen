@@ -1,3 +1,4 @@
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
 <p-toolbar>
     <ng-template #start>
         <p-button icon="pi pi-plus" class="mr-2" text severity="secondary" />
@@ -22,4 +23,12 @@
         </div>
     </ng-template>
 </p-toolbar>
+<p-dialog [header]="selectedAction === 'delete' ? 'حذف': 'تعديل'" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    @if (selectedAction === 'delete') {
+        <app-delete-product [product]="selectedProduct"></app-delete-product>
+    } @else {
+
+    }
+</p-dialog>
 <app-product-list (onClick)="selectProduct($event)" [isDashboard]="true"></app-product-list>
