@@ -73,7 +73,7 @@ export class ProductListComponent implements OnInit{
     )
   }
 
-
+  // first is the current page number rows 
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
