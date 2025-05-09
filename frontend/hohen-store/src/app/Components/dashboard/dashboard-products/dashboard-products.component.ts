@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ProductListComponent } from '../../product-list/product-list.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
@@ -30,6 +30,7 @@ export class DashboardProductsComponent {
   selectedProduct: Product | undefined;
   visible: boolean = false;
 
+  @ViewChild(ProductListComponent) productListComponent!: ProductListComponent;
 
   constructor(private messageService: MessageService) {
     this.items = [
@@ -51,5 +52,16 @@ export class DashboardProductsComponent {
     }
   }
 
+  onProductDeleted(event: string) {
+    if (event) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'تم حذف المنتج التالي :',
+        detail: event
+      });
+      this.productListComponent.loadProducts();
+      this.visible = false;
+    }
+  }
 
 }

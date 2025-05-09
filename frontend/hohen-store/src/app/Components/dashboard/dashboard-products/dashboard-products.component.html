@@ -26,7 +26,7 @@
 <p-dialog [header]="selectedAction === 'delete' ? 'حذف': 'تعديل'" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
     [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     @if (selectedAction === 'delete') {
-        <app-delete-product [product]="selectedProduct"></app-delete-product>
+        <app-delete-product (deleted)="onProductDeleted($event)" [product]="selectedProduct"></app-delete-product>
     } @else {
 
     }
